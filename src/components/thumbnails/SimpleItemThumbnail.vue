@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { icons } from '@/icons'
 import { thumbnailUrls } from '@/utils/thumbnailUrl'
+import { resolveAssetUrl } from '@/utils/url'
 import type { ItemType } from '@sonolus/core'
 import { computed, ref } from 'vue'
 import type { Item } from '../../utils/item'
@@ -12,9 +13,7 @@ const props = defineProps<{
 
 const src = computed(() => {
     const url = thumbnailUrls[props.type](props.item as never)
-    if (!url) return ''
-
-    return url.startsWith('/') ? `${import.meta.env.BASE_URL}${url.slice(1)}` : url
+    return resolveAssetUrl(url)
 })
 
 const errorSrc = ref('')

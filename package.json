@@ -9,7 +9,7 @@
     "check-type": "vue-tsc --build --force",
     "check-lint": "eslint .",
     "check-format": "prettier . --check",
-    "build": "vite build"
+    "build": "vite build && node -e \"require('fs').copyFileSync('dist/index.html', 'dist/404.html')\""
   },
   "dependencies": {
     "@sonolus/core": "~7.15.4",

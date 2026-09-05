@@ -1,13 +1,16 @@
 import { auth, checkAuth } from '@/auth'
 import { configuration } from '@/configuration'
 
+const getApiBase = () =>
+    (import.meta.env.VITE_API_BASE_URL as string | undefined) || `${import.meta.env.BASE_URL}sonolus`
+
 export const sonolusGet = async <T>(options: { url: string; query?: Record<string, string> }) => {
     const params = new URLSearchParams({
         ...configuration.value,
         ...options.query,
     })
 
-    const response = await fetch(`${import.meta.env.BASE_URL}sonolus${options.url}?${params}`, {
+    const response = await fetch(`${getApiBase()}${options.url}?${params}`, {
         headers: getAuthHeaders(),
     })
     handle401(response)
@@ -25,7 +28,7 @@ export const sonolusPost = async <T>(options: {
         ...options.query,
     })
 
-    const response = await fetch(`${import.meta.env.BASE_URL}sonolus${options.url}?${params}`, {
+    const response = await fetch(`${getApiBase()}${options.url}?${params}`, {
         method: 'POST',
         headers: {
             ...getAuthHeaders(),
@@ -58,7 +61,7 @@ export const sonolusUpload = async <T>(options: {
         body.append('files', file, hash)
     }
 
-    const response = await fetch(`${import.meta.env.BASE_URL}sonolus${options.url}?${params}`, {
+    const response = await fetch(`${getApiBase()}${options.url}?${params}`, {
         method: 'POST',
         headers: {
             ...getAuthHeaders(),

@@ -1,15 +1,12 @@
 <script setup lang="ts">
+import { resolveAssetUrl } from '@/utils/url'
 import { computed } from 'vue'
 
 const props = defineProps<{
     banner?: string
 }>()
 
-const url = computed(() =>
-    props.banner?.startsWith('/')
-        ? `${import.meta.env.BASE_URL}${props.banner.slice(1)}`
-        : props.banner,
-)
+const url = computed(() => resolveAssetUrl(props.banner))
 </script>
 
 <template>
