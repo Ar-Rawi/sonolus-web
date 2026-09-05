@@ -21,12 +21,26 @@ export default defineConfig({
         },
     },
     server: {
+        host: true,
+        allowedHosts: true,
         proxy: {
             [`${env.VITE_BASE_URL}sonolus`]: {
                 target: env.VITE_DEV_API,
                 changeOrigin: true,
                 secure: false,
-                rewrite: (path) => path.slice(env.VITE_BASE_URL.length),
+                rewrite: (path) => '/' + path.slice(env.VITE_BASE_URL.length).replace(/^\/+/, ''),
+            },
+        },
+    },
+    preview: {
+        host: true,
+        allowedHosts: true,
+        proxy: {
+            [`${env.VITE_BASE_URL}sonolus`]: {
+                target: env.VITE_DEV_API,
+                changeOrigin: true,
+                secure: false,
+                rewrite: (path) => '/' + path.slice(env.VITE_BASE_URL.length).replace(/^\/+/, ''),
             },
         },
     },
